@@ -1,6 +1,10 @@
 {
 	"AppIDs" : {
+		"OneDrive" : "test",
+		"Imgur" : "test"
 	},
 	"Secrets" : {
+		"OneDrive" : "test",
+		"Imgur" : "test"
 	}
 }
