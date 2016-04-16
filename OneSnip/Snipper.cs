@@ -160,10 +160,11 @@ namespace OneSnip
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
                 g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
                 g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.DrawImage(printscreen, 0, 0, rect, GraphicsUnit.Pixel);
 
                 this.Close();
-                snip.setImage(_img);
+                snip.setImage(_img, curScreen);
 
                 //Clipboard.SetImage(_img);
                 //OneSnipTray.confirmImageInClipboard();

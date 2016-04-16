@@ -22,6 +22,7 @@ namespace OneSnip
         private static Editor editorForm;
         private static List<Snipper> snippers = new List<Snipper>();
         private static CloudManager cloudManager;
+        private static Screen lastScreenUsed;
 
         public OneSnipTray()
         {
@@ -118,13 +119,20 @@ namespace OneSnip
 
         private async static void Snip_SnipCreated(object sender, SnipEventArgs e)
         {
-
-            ImageResult result = await cloudManager.handleImage(e.image);
+            lastScreenUsed = e.screenUsed;
+            ImageResult result = await cloudManager.handleImage(e.image, lastScreenUsed);
             ToastMetadata toastData = new ToastMetadata();
 
             DoClipboardAndSetupToast(result, toastData);
 
             toastData.ShowToast(notifyIcon);
+        }
+
+        private static void EditImage(object sender, EventArgs e)
+        {
+            editorForm = new Editor(cloudManager.getBuffer(), cloudManager.getFilePath(), lastScreenUsed);
+            editorForm.Closed += editorForm_Closed;
+            editorForm.Show();
         }
 
         public static void AddToClipboard(ImageResult result)
@@ -178,13 +186,6 @@ namespace OneSnip
             RtfWriter writer = new RtfWriter();
 
             return writer.GetContent(rtf);
-        }
-
-        private static void EditImage(object sender, EventArgs e)
-        {
-            editorForm = new Editor(cloudManager.getBuffer(), cloudManager.getFilePath());
-            editorForm.Closed += editorForm_Closed;
-            editorForm.Show();
         }
 
         public static void balloonForNewLink(string link)
