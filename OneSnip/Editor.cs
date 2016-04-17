@@ -131,6 +131,7 @@ namespace OneSnip
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
             g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
             //g.DrawImage(printscreen, 0, 0, rect, GraphicsUnit.Pixel);
 
             ImageResult imageResult = await cloudManager.handleImage(image, originalScreen, true);

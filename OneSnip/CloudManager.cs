@@ -123,6 +123,11 @@ namespace OneSnip
 
             float scale = getScalingFactor(screenUsed);
 
+            if (scale <= 1)
+            {
+                return imageBuffer;
+            }
+
             float newWidth = (original.Width / scale);
             float newHeight = (original.Height / scale);
 
