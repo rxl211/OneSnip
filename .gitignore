@@ -1,6 +1,9 @@
 MyAPIKeys.json
 bin/
 obj/
+BuildDate.txt
+HEAD.txt
+.vs/
 
 # Windows image file caches
 Thumbs.db

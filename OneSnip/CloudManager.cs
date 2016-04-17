@@ -26,7 +26,9 @@ namespace OneSnip
 
         public CloudManager()
         {
-            JObject keys = JObject.Parse(System.IO.File.ReadAllText("MyAPIKeys.json"));
+            string keystring = System.Text.Encoding.UTF8.GetString(Properties.Resources.MyAPIKeys);
+
+            JObject keys = JObject.Parse(keystring);
 
             config = new AppConfig();
             config.MicrosoftAccountAppId = (String)keys["AppIDs"]["OneDrive"];
