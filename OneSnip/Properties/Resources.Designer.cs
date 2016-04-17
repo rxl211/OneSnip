@@ -61,6 +61,36 @@ namespace OneSnip.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sat 04/16/2016 18:48:26.80 
+        ///.
+        /// </summary>
+        internal static string BuildDate {
+            get {
+                return ResourceManager.GetString("BuildDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ref: refs/heads/master
+        ///.
+        /// </summary>
+        internal static string HEAD {
+            get {
+                return ResourceManager.GetString("HEAD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] MyAPIKeys {
+            get {
+                object obj = ResourceManager.GetObject("MyAPIKeys", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon onesnip128x128 {

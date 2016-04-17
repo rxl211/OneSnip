@@ -285,14 +285,34 @@ namespace OneSnip
             Quit.Text = "Exit";
             Quit.Click += Quit_Click;
 
+            ToolStripMenuItem BuildInfo = new ToolStripMenuItem();
+            BuildInfo.Text = getBuildInfoString();
+            BuildInfo.Enabled = false;
+
+
             notifyIcon.ContextMenuStrip.Items.Clear();
             notifyIcon.ContextMenuStrip.Items.Add(ClipboardBehavior);
             notifyIcon.ContextMenuStrip.Items.Add(CloudTarget);
             notifyIcon.ContextMenuStrip.Items.Add(autoStart);
             notifyIcon.ContextMenuStrip.Items.Add(SignInSignOut);
+            notifyIcon.ContextMenuStrip.Items.Add(BuildInfo);
             notifyIcon.ContextMenuStrip.Items.Add(Quit);
 
+        }
 
+        private static string getBuildInfoString()
+        {
+            string date = Properties.Resources.BuildDate.ToString().Trim();
+            string head = Properties.Resources.HEAD.ToString();
+
+            string branch = head.Split('/')[2].Trim();
+
+            DateTime dt = new DateTime();
+            DateTime.TryParse(date, out dt);
+
+            date = dt.ToString("MM/dd/yy h:mm tt");
+
+            return "Built from " + branch + " (" + date + ")";
         }
 
         private static void AutoStart_Click(object sender, EventArgs e)
