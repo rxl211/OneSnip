@@ -20,6 +20,7 @@ namespace OneSnip
         private GraphicsPath drawPath = new GraphicsPath();
         private Bitmap image;
         private Graphics imageGraphics;
+        private Screen originalScreen; //what screen was used to snip the image we're editing?
 
         private string filePath;
 
@@ -27,10 +28,11 @@ namespace OneSnip
         int lastX;
         int lastY;
 
-        public Editor(byte[] imageBuffer, string _filePath)
+        public Editor(byte[] imageBuffer, string _filePath, Screen _originalScreen)
         {
             InitializeComponent();
             filePath = _filePath;
+            originalScreen = _originalScreen;
 
             Image img;
             using (var ms = new MemoryStream(imageBuffer))
@@ -129,9 +131,10 @@ namespace OneSnip
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
             g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
             //g.DrawImage(printscreen, 0, 0, rect, GraphicsUnit.Pixel);
 
-            ImageResult imageResult = await cloudManager.handleImage(image, true);
+            ImageResult imageResult = await cloudManager.handleImage(image, originalScreen, true);
 
             OneSnipTray.AddToClipboard(imageResult);
             OneSnipTray.balloonForNewLink(imageResult.link);

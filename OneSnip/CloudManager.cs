@@ -10,6 +10,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Drawing;
 using Newtonsoft.Json.Linq;
+using System.Runtime.InteropServices;
 
 namespace OneSnip
 {
@@ -39,6 +40,17 @@ namespace OneSnip
             imgurSecret = (String)keys["Secrets"]["Imgur"];
         }
 
+        #region DPIHelpers
+        [DllImport("gdi32.dll")]
+        static extern IntPtr CreateDC(string lpszDriver, string lpszDevice, string lpszOutput, IntPtr lpInitData);
+
+        [DllImport("User32.dll")]
+        private static extern IntPtr MonitorFromPoint([In]System.Drawing.Point pt, [In]uint dwFlags);
+
+        [DllImport("Shcore.dll")]
+        private static extern IntPtr GetDpiForMonitor([In]IntPtr hmonitor, [In]Int32 dpiType, [Out]out uint dpiX, [Out]out uint dpiY);
+        #endregion
+
         public byte[] getBuffer()
         {
             return buffer;
@@ -49,7 +61,7 @@ namespace OneSnip
             return filePath;
         }
 
-        public async Task<ImageResult> handleImage(Bitmap image, bool forceUpload = false)
+        public async Task<ImageResult> handleImage(Bitmap image, Screen screenUsed, bool forceUpload = false)
         {
             string fileName = DateTime.Now.ToString("MMddyyyyhhmmss") + ".jpg";
             filePath = "OneSnip/" + fileName;
@@ -67,7 +79,7 @@ namespace OneSnip
             {
                 try
                 {
-                    link = await uploadImageAndGetLink(buffer, filePath);
+                    link = await uploadImageAndGetLink(buffer, filePath, screenUsed);
                 }
                 catch (Exception ex)
                 {
@@ -84,9 +96,12 @@ namespace OneSnip
             return new ImageResult(cloudName, image, link);
         }
 
-        public async Task<string> uploadImageAndGetLink(byte[] imageBuffer, string filePath)
+        public async Task<string> uploadImageAndGetLink(byte[] imageBuffer, string filePath, Screen screenUsed)
         {
             string link;
+
+            imageBuffer = GetDpiScaledImage(imageBuffer, screenUsed);
+
             if (Properties.Settings.Default.cloudTarget == "OneDrive")
             {
                 var uploadedItem = await oneDriveClient.Drive.Root.ItemWithPath(filePath).Content.Request().PutAsync<Item>(new MemoryStream(imageBuffer));
@@ -100,6 +115,49 @@ namespace OneSnip
             }
 
             return link;
+        }
+
+        private byte[] GetDpiScaledImage(byte[] imageBuffer, Screen screenUsed)
+        {
+            Bitmap original = (Bitmap)Bitmap.FromStream(new MemoryStream(imageBuffer));
+
+            float scale = getScalingFactor(screenUsed);
+
+            if (scale <= 1)
+            {
+                return imageBuffer;
+            }
+
+            float newWidth = (original.Width / scale);
+            float newHeight = (original.Height / scale);
+
+            Bitmap image = new Bitmap((int)newWidth, (int)newHeight);
+            Graphics g = Graphics.FromImage(image);
+
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            g.DrawImage(original, 0, 0, newWidth, newHeight);
+
+            MemoryStream memStream = new MemoryStream();
+            image.Save(memStream, ImageFormat.Jpeg);
+
+            return memStream.ToArray();
+        }
+
+        private float getScalingFactor(Screen screenUsed)
+        {
+            uint dpiX;
+            uint dpiY;
+
+            var pnt = new System.Drawing.Point(screenUsed.Bounds.Left + 1, screenUsed.Bounds.Top + 1);
+            var mon = MonitorFromPoint(pnt, 2/*MONITOR_DEFAULTTONEAREST*/);
+            
+            GetDpiForMonitor(mon, 0 /*DpiType Effective*/, out dpiX, out dpiY);
+
+            return dpiX / (float)96; // 1.25 = 125%
         }
 
         private async Task<string> imgurUpload(byte[] imageBuffer)
