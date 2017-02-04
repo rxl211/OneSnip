@@ -108,12 +108,12 @@ namespace OneSnip
 
         private void PictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-            //allPaths.Add(drawPath);
-            
-            drawing = false;
-            drawPath = new GraphicsPath();
-            button_Undo.Enabled = true;
-            //pictureBox1.Image = image;
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                drawing = false;
+                drawPath = new GraphicsPath();
+                button_Undo.Enabled = true;
+            }
         }
 
         private void button_Draw_Paint(object sender, PaintEventArgs e)
