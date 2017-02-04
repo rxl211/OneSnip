@@ -70,7 +70,7 @@ namespace OneSnip
             string cloudName = (Properties.Settings.Default.cloudTarget == "OneDrive") ? "OneDrive" : "Imgur";
 
             MemoryStream memStream = new MemoryStream();
-            image.Save(memStream, ImageFormat.Jpeg);
+            image.Save(memStream, ImageFormat.Png);
 
             buffer = memStream.ToArray();
 

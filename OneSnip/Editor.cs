@@ -138,7 +138,10 @@ namespace OneSnip
             g.SmoothingMode = SmoothingMode.AntiAlias;
             //g.DrawImage(printscreen, 0, 0, rect, GraphicsUnit.Pixel);
 
+            button_UploadAndClose.Enabled = false;
+            button_UploadAndClose.Text = "Uploading...";
             ImageResult imageResult = await cloudManager.handleImage(image, originalScreen, true);
+            
 
             OneSnipTray.AddToClipboard(imageResult);
             OneSnipTray.balloonForNewLink(imageResult.link);
