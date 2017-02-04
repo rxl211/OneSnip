@@ -108,12 +108,12 @@ namespace OneSnip
 
         private void PictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-            //allPaths.Add(drawPath);
-            
-            drawing = false;
-            drawPath = new GraphicsPath();
-            button_Undo.Enabled = true;
-            //pictureBox1.Image = image;
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                drawing = false;
+                drawPath = new GraphicsPath();
+                button_Undo.Enabled = true;
+            }
         }
 
         private void button_Draw_Paint(object sender, PaintEventArgs e)
@@ -128,6 +128,10 @@ namespace OneSnip
 
         private async void button_UploadAndClose_Click(object sender, EventArgs e)
         {
+            button_UploadAndClose.Enabled = false;
+            button_UploadAndClose.Text = "Uploading...";
+            button_UploadAndClose.Refresh();
+
             CloudManager cloudManager = OneSnipTray.getCloudManager();
 
             Graphics g = Graphics.FromImage(image);
@@ -138,16 +142,13 @@ namespace OneSnip
             g.SmoothingMode = SmoothingMode.AntiAlias;
             //g.DrawImage(printscreen, 0, 0, rect, GraphicsUnit.Pixel);
 
-            button_UploadAndClose.Enabled = false;
-            button_UploadAndClose.Text = "Uploading...";
             ImageResult imageResult = await cloudManager.handleImage(image, originalScreen, true);
-            
+
 
             OneSnipTray.AddToClipboard(imageResult);
             OneSnipTray.balloonForNewLink(imageResult.link);
 
             this.Close();
-            
         }
 
         private void button_Undo_Click(object sender, EventArgs e)

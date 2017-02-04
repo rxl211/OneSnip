@@ -156,6 +156,7 @@ namespace OneSnip
                 string combined = getCombinedImageText(result);
 
                 DataObject data = new DataObject();
+                data.SetData(DataFormats.Bitmap, result.image);
                 data.SetData(DataFormats.Text, true, result.link); //we explicitly put in the link because some clients like browsers and IM windows won't know how to render combiend (RTF) data
                 data.SetData(DataFormats.Rtf, true, combined);
 
@@ -178,8 +179,12 @@ namespace OneSnip
 
             RtfImage rtfImage = new RtfImage((System.Drawing.Bitmap)result.image, RtfImageFormat.Jpeg);
             rtfTextBlock.AppendParagraph(rtfImage);
+            rtfTextBlock.AppendParagraph();
 
-            RtfFormattedText rtfLink = new RtfFormattedText(result.link);
+            RtfFont bla = new RtfFont("Calibri");
+            rtf.FontTable.Add(bla);
+
+            RtfFormattedText rtfLink = new RtfFormattedText(result.link, 1, 12);
             rtfTextBlock.AppendParagraph(rtfLink);
 
             rtf.Contents.Add(rtfTextBlock);
