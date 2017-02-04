@@ -63,7 +63,7 @@ namespace OneSnip
 
         public async Task<ImageResult> handleImage(Bitmap image, Screen screenUsed, bool forceUpload = false)
         {
-            string fileName = DateTime.Now.ToString("MMddyyyyhhmmss") + ".jpg";
+            string fileName = DateTime.Now.ToString("MMddyyyyhhmmss") + ".png";
             filePath = "OneSnip/" + fileName;
             string link;
 
