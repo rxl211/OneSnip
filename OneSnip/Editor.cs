@@ -128,6 +128,10 @@ namespace OneSnip
 
         private async void button_UploadAndClose_Click(object sender, EventArgs e)
         {
+            button_UploadAndClose.Enabled = false;
+            button_UploadAndClose.Text = "Uploading...";
+            button_UploadAndClose.Refresh();
+
             CloudManager cloudManager = OneSnipTray.getCloudManager();
 
             Graphics g = Graphics.FromImage(image);
@@ -138,16 +142,13 @@ namespace OneSnip
             g.SmoothingMode = SmoothingMode.AntiAlias;
             //g.DrawImage(printscreen, 0, 0, rect, GraphicsUnit.Pixel);
 
-            button_UploadAndClose.Enabled = false;
-            button_UploadAndClose.Text = "Uploading...";
             ImageResult imageResult = await cloudManager.handleImage(image, originalScreen, true);
-            
+
 
             OneSnipTray.AddToClipboard(imageResult);
             OneSnipTray.balloonForNewLink(imageResult.link);
 
             this.Close();
-            
         }
 
         private void button_Undo_Click(object sender, EventArgs e)
