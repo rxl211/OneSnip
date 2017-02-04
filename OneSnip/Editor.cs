@@ -16,7 +16,6 @@ namespace OneSnip
     public partial class Editor : Form
     {
         private bool drawing = false;
-        private bool wantToDraw = true;
         private GraphicsPath drawPath = new GraphicsPath();
         private Bitmap image;
         private Graphics imageGraphics;
@@ -63,17 +62,11 @@ namespace OneSnip
 
         }
 
-        private void button_Draw_Click(object sender, EventArgs e)
-        {
-            wantToDraw = !wantToDraw;
-        }
-
         private void PictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             
-            if (wantToDraw && e.Button == System.Windows.Forms.MouseButtons.Left)
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                System.Diagnostics.Debug.WriteLine("mouse down!!!");
                 //starts coordinates for rectangle
                 lastX = e.X;
                 lastY = e.Y;
