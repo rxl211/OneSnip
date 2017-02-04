@@ -16,11 +16,12 @@ namespace OneSnip
     public partial class Editor : Form
     {
         private bool drawing = false;
-        private bool wantToDraw = false;
+        private bool wantToDraw = true;
         private GraphicsPath drawPath = new GraphicsPath();
         private Bitmap image;
         private Graphics imageGraphics;
         private Screen originalScreen; //what screen was used to snip the image we're editing?
+        private Stack<Bitmap> undoStack = new Stack<Bitmap>();
 
         private string filePath;
 
@@ -58,6 +59,8 @@ namespace OneSnip
             pictureBox1.MouseMove += PictureBox1_MouseMove;
             pictureBox1.MouseUp += PictureBox1_MouseUp;
 
+            button_Undo.Enabled = false;
+
         }
 
         private void button_Draw_Click(object sender, EventArgs e)
@@ -67,13 +70,19 @@ namespace OneSnip
 
         private void PictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
+            
             if (wantToDraw && e.Button == System.Windows.Forms.MouseButtons.Left)
             {
+                System.Diagnostics.Debug.WriteLine("mouse down!!!");
                 //starts coordinates for rectangle
                 lastX = e.X;
                 lastY = e.Y;
                 drawing = true;
                 pictureBox1.Refresh();
+
+                //add whatever the image currently is to the undo stack so we can revert later if needed
+                Bitmap imageCopy = new Bitmap(image);
+                undoStack.Push(imageCopy);
 
                 //image = (Bitmap)pictureBox1.Image;
                 imageGraphics = Graphics.FromImage(image);
@@ -99,6 +108,7 @@ namespace OneSnip
                 imageGraphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
                 imageGraphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
                 imageGraphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                imageGraphics.SmoothingMode = SmoothingMode.AntiAlias;
                 pictureBox1.Image = image;
             }
         }
@@ -109,7 +119,8 @@ namespace OneSnip
             
             drawing = false;
             drawPath = new GraphicsPath();
-            //pictureBox1.Image = image;    
+            button_Undo.Enabled = true;
+            //pictureBox1.Image = image;
         }
 
         private void button_Draw_Paint(object sender, PaintEventArgs e)
@@ -141,6 +152,18 @@ namespace OneSnip
 
             this.Close();
             
+        }
+
+        private void button_Undo_Click(object sender, EventArgs e)
+        {
+            image = undoStack.Pop();
+            pictureBox1.Image = image;
+            pictureBox1.Refresh();
+
+            if (undoStack.Count == 0)
+            {
+                button_Undo.Enabled = false;
+            }
         }
     }
 }

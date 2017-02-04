@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.button_Undo = new System.Windows.Forms.Button();
             this.button_UploadAndClose = new System.Windows.Forms.Button();
             this.button_Copy = new System.Windows.Forms.Button();
-            this.button_Draw = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -51,19 +51,28 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.BackColor = System.Drawing.Color.AliceBlue;
+            this.splitContainer1.Panel1.Controls.Add(this.button_Undo);
             this.splitContainer1.Panel1.Controls.Add(this.button_UploadAndClose);
             this.splitContainer1.Panel1.Controls.Add(this.button_Copy);
-            this.splitContainer1.Panel1.Controls.Add(this.button_Draw);
             this.splitContainer1.Panel1MinSize = 80;
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.BackColor = System.Drawing.Color.LightSkyBlue;
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox1);
             this.splitContainer1.Size = new System.Drawing.Size(584, 261);
             this.splitContainer1.SplitterDistance = 100;
             this.splitContainer1.TabIndex = 0;
-            this.splitContainer1.Panel2.BackColor = System.Drawing.Color.LightSkyBlue;
-
+            // 
+            // button_Undo
+            // 
+            this.button_Undo.Location = new System.Drawing.Point(103, 29);
+            this.button_Undo.Name = "button_Undo";
+            this.button_Undo.Size = new System.Drawing.Size(75, 23);
+            this.button_Undo.TabIndex = 3;
+            this.button_Undo.Text = "Undo";
+            this.button_Undo.UseVisualStyleBackColor = true;
+            this.button_Undo.Click += new System.EventHandler(this.button_Undo_Click);
             // 
             // button_UploadAndClose
             // 
@@ -85,17 +94,6 @@
             this.button_Copy.Text = "Copy";
             this.button_Copy.UseVisualStyleBackColor = true;
             this.button_Copy.Click += new System.EventHandler(this.button_Copy_Click);
-            // 
-            // button_Draw
-            // 
-            this.button_Draw.Location = new System.Drawing.Point(103, 32);
-            this.button_Draw.Name = "button_Draw";
-            this.button_Draw.Size = new System.Drawing.Size(75, 23);
-            this.button_Draw.TabIndex = 0;
-            this.button_Draw.Text = "Draw";
-            this.button_Draw.UseVisualStyleBackColor = true;
-            this.button_Draw.Click += new System.EventHandler(this.button_Draw_Click);
-            this.button_Draw.Paint += new System.Windows.Forms.PaintEventHandler(this.button_Draw_Paint);
             // 
             // pictureBox1
             // 
@@ -130,6 +128,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button_UploadAndClose;
         private System.Windows.Forms.Button button_Copy;
-        private System.Windows.Forms.Button button_Draw;
+        private System.Windows.Forms.Button button_Undo;
     }
 }
