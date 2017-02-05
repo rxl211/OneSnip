@@ -45,20 +45,26 @@ namespace OneSnip
             pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize; //this makes sure the picturebox can fit the whole image (but it has nothing to do with the size of the window)
             pictureBox1.Anchor = AnchorStyles.None;
             pictureBox1.Dock = DockStyle.Fill;
+            pictureBox1.Margin = new Padding(20);
             //bottomPanel.Margin = new Padding(20);
 
             //tableLayoutPanel1.MinimumSize = new Size(image.Width + 20, image.Height + topPanel.Height); //this doesn't seem to be doing anything?
 
             topPanel.AutoSize = true;
-            topPanel.Width = image.Width;
+            topPanel.MinimumSize = new Size(318, 1);
 
-            bottomPanel.AutoSize = true;
+            bottomPanel.AutoSize = false;
             bottomPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            bottomPanel.Height = image.Height;
+            
+            bottomPanel.Margin = new Padding(0,0,0,0);
+            bottomPanel.Anchor = AnchorStyles.None;
+            tableLayoutPanel1.Margin = new Padding(0, 0, 0, 0);
 
-            //tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, image.Height));
-            tableLayoutPanel1.Controls.Add(this.bottomPanel, 0, 1);
+            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 1);
 
-            tableLayoutPanel1.Size = new Size(image.Width, bottomPanel.Height + topPanel.Height);
+            //tableLayoutPanel1.Size = new Size(bottomPanel.Width, bottomPanel.Height + topPanel.Height);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
 
@@ -84,6 +90,7 @@ namespace OneSnip
             flowLayoutPanel1.AutoSize = true;
             flowLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             flowLayoutPanel1.Anchor = AnchorStyles.None;
+            flowLayoutPanel1.WrapContents = false;
             //flowLayoutPanel1.BackColor = Color.Green;
 
             
@@ -93,16 +100,16 @@ namespace OneSnip
 
             tableLayoutPanel2.Controls.Add(flowLayoutPanel1);
             //tableLayoutPanel2.BackColor = Color.Pink;
-            tableLayoutPanel2.Height = flowLayoutPanel1.Height;
+            tableLayoutPanel2.Height = flowLayoutPanel1.Height * 2;
 
             
 
             pictureBox1.Image = image;
             pictureBox1.Anchor = AnchorStyles.None;
-            pictureBox1.Location = new Point((bottomPanel.Width / 2) - (pictureBox1.Width / 2),
-                                         (bottomPanel.Height / 2) - (pictureBox1.Height / 2));
+            //pictureBox1.Location = new Point((bottomPanel.Width / 2) - (pictureBox1.Width / 2),
+            //                             (bottomPanel.Height / 2) - (pictureBox1.Height / 2));
 
-            //pictureBox1.Location = new Point(0, 0);
+            pictureBox1.Location = new Point(0, 0);
             pictureBox1.Refresh();
 
             pictureBox1.MouseDown += PictureBox1_MouseDown;
@@ -110,7 +117,7 @@ namespace OneSnip
             pictureBox1.MouseUp += PictureBox1_MouseUp;
 
             Color mainFrame = Color.FromArgb(38, 38, 38);
-            Color toolbar = Color.FromArgb(13, 13, 13);
+            Color toolbar = Color.FromArgb(24, 23, 23);
 
             tableLayoutPanel2.BackColor = toolbar;
             bottomPanel.BackColor = mainFrame;
