@@ -151,8 +151,9 @@
             this.Controls.Add(this.tableLayoutPanel1);
             //this.MinimumSize = new System.Drawing.Size(600, 300);
             this.AutoSize = true;
-            this.Name = "Editor";
-            this.Text = "Editor";
+            this.Name = "OneSnip";
+            this.Text = "OneSnip";
+            this.Icon = OneSnip.Properties.Resources.onesnip256x256;
             this.tableLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
