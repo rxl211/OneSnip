@@ -28,45 +28,54 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.button_Undo = new System.Windows.Forms.Button();
-            this.button_UploadAndClose = new System.Windows.Forms.Button();
             this.button_Copy = new System.Windows.Forms.Button();
+            this.button_UploadAndClose = new System.Windows.Forms.Button();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.topPanel = new System.Windows.Forms.Panel();
+            this.bottomPanel = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
+            this.topPanel.SuspendLayout();
+            this.bottomPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // splitContainer1
+            // tableLayoutPanel1
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.tableLayoutPanel1.ColumnCount = 1;
+            //this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            //this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Clear();
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            this.tableLayoutPanel1.Controls.Add(this.topPanel, 0, 0);
+            //this.tableLayoutPanel1.Controls.Add(this.bottomPanel, 0, 1);
+            //this.tableLayoutPanel1.Size = new System.Drawing.Size(584, 261);
+            this.tableLayoutPanel1.TabIndex = 4;
+            //this.tableLayoutPanel1.BackColor = System.Drawing.Color.Red;
+            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.None;
+            this.tableLayoutPanel1.AutoSize = true;
             // 
-            // splitContainer1.Panel1
+            // flowLayoutPanel1
             // 
-            this.splitContainer1.Panel1.BackColor = System.Drawing.Color.AliceBlue;
-            this.splitContainer1.Panel1.Controls.Add(this.button_Undo);
-            this.splitContainer1.Panel1.Controls.Add(this.button_UploadAndClose);
-            this.splitContainer1.Panel1.Controls.Add(this.button_Copy);
-            this.splitContainer1.Panel1MinSize = 80;
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.splitContainer1.Panel2.Controls.Add(this.pictureBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(584, 261);
-            this.splitContainer1.SplitterDistance = 100;
-            this.splitContainer1.TabIndex = 0;
+            this.flowLayoutPanel1.Controls.Add(this.button_Undo);
+            this.flowLayoutPanel1.Controls.Add(this.button_Copy);
+            this.flowLayoutPanel1.Controls.Add(this.button_UploadAndClose);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 244);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            //this.flowLayoutPanel1.Size = new System.Drawing.Size(312, 14);
+            this.flowLayoutPanel1.TabIndex = 4;
             // 
             // button_Undo
             // 
-            this.button_Undo.Location = new System.Drawing.Point(103, 29);
+            this.button_Undo.Location = new System.Drawing.Point(3, 3);
             this.button_Undo.Name = "button_Undo";
             this.button_Undo.Size = new System.Drawing.Size(75, 23);
             this.button_Undo.TabIndex = 3;
@@ -74,20 +83,9 @@
             this.button_Undo.UseVisualStyleBackColor = true;
             this.button_Undo.Click += new System.EventHandler(this.button_Undo_Click);
             // 
-            // button_UploadAndClose
-            // 
-            this.button_UploadAndClose.AutoSize = true;
-            this.button_UploadAndClose.Location = new System.Drawing.Point(436, 29);
-            this.button_UploadAndClose.Name = "button_UploadAndClose";
-            this.button_UploadAndClose.Size = new System.Drawing.Size(128, 23);
-            this.button_UploadAndClose.TabIndex = 2;
-            this.button_UploadAndClose.Text = "Get link and Close";
-            this.button_UploadAndClose.UseVisualStyleBackColor = true;
-            this.button_UploadAndClose.Click += new System.EventHandler(this.button_UploadAndClose_Click);
-            // 
             // button_Copy
             // 
-            this.button_Copy.Location = new System.Drawing.Point(288, 29);
+            this.button_Copy.Location = new System.Drawing.Point(84, 3);
             this.button_Copy.Name = "button_Copy";
             this.button_Copy.Size = new System.Drawing.Size(75, 23);
             this.button_Copy.TabIndex = 1;
@@ -95,11 +93,53 @@
             this.button_Copy.UseVisualStyleBackColor = true;
             this.button_Copy.Click += new System.EventHandler(this.button_Copy_Click);
             // 
+            // button_UploadAndClose
+            // 
+            this.button_UploadAndClose.AutoSize = true;
+            this.button_UploadAndClose.Location = new System.Drawing.Point(165, 3);
+            this.button_UploadAndClose.Name = "button_UploadAndClose";
+            this.button_UploadAndClose.Size = new System.Drawing.Size(128, 23);
+            this.button_UploadAndClose.TabIndex = 2;
+            this.button_UploadAndClose.Text = "Get link and Close";
+            this.button_UploadAndClose.UseVisualStyleBackColor = true;
+            this.button_UploadAndClose.Click += new System.EventHandler(this.button_UploadAndClose_Click);
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            //this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            //this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 164);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            //this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            //this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 94F));
+            //this.tableLayoutPanel2.Size = new System.Drawing.Size(200, 94);
+            this.tableLayoutPanel2.TabIndex = 5;
+            // 
+            // topPanel
+            // 
+            this.topPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            //this.topPanel.BackColor = System.Drawing.Color.Orange;
+            this.topPanel.Controls.Add(this.tableLayoutPanel2);
+            this.topPanel.Location = new System.Drawing.Point(3, 3);
+            this.topPanel.Name = "topPanel";
+            this.topPanel.TabIndex = 5;
+            // 
+            // bottomPanel
+            // 
+            this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            //this.bottomPanel.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.bottomPanel.Controls.Add(this.pictureBox1);
+            this.bottomPanel.Location = new System.Drawing.Point(3, 144);
+            this.bottomPanel.Name = "bottomPanel";
+            this.bottomPanel.TabIndex = 0;
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(273, 199);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
+            //this.pictureBox1.Size = new System.Drawing.Size(100, 50);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -107,16 +147,18 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 261);
-            this.Controls.Add(this.splitContainer1);
-            this.MinimumSize = new System.Drawing.Size(600, 300);
-            this.Name = "Editor";
-            this.Text = "Editor";
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
+            //this.ClientSize = new System.Drawing.Size(584, 261);
+            this.Controls.Add(this.tableLayoutPanel1);
+            //this.MinimumSize = new System.Drawing.Size(600, 300);
+            this.AutoSize = true;
+            this.Name = "OneSnip";
+            this.Text = "OneSnip";
+            this.Icon = OneSnip.Properties.Resources.onesnip256x256;
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
+            this.topPanel.ResumeLayout(false);
+            this.bottomPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
@@ -124,10 +166,14 @@
 
         #endregion
 
-        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Panel topPanel;
+        private System.Windows.Forms.Panel bottomPanel;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button_UploadAndClose;
         private System.Windows.Forms.Button button_Copy;
         private System.Windows.Forms.Button button_Undo;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     }
 }
