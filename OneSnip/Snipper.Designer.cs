@@ -33,7 +33,9 @@ namespace OneSnip
         private void InitializeComponent()
         {
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.prePrintscreen = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.prePrintscreen)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -48,11 +50,21 @@ namespace OneSnip
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
             // 
+            // prePrintscreen
+            // 
+            this.prePrintscreen.Location = new System.Drawing.Point(0, 0);
+            this.prePrintscreen.Name = "prePrintscreen";
+            this.prePrintscreen.Size = new System.Drawing.Size(100, 50);
+            this.prePrintscreen.TabIndex = 1;
+            this.prePrintscreen.TabStop = false;
+            this.prePrintscreen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.prePrintscreen_MouseDown);
+            this.prePrintscreen.MouseMove += new System.Windows.Forms.MouseEventHandler(this.prePrintscreen_MouseMove);
+            this.prePrintscreen.MouseUp += new System.Windows.Forms.MouseEventHandler(this.prePrintscreen_MouseUp);
+            // 
             // Snipper
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            Color col = System.Drawing.Color.FromArgb(10, Color.Black);
             this.BackColor = System.Drawing.Color.HotPink;
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Controls.Add(this.pictureBox1);
@@ -64,6 +76,7 @@ namespace OneSnip
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Snipper_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.prePrintscreen)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -71,5 +84,6 @@ namespace OneSnip
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
+        private PictureBox prePrintscreen;
     }
 }

@@ -191,31 +191,36 @@ namespace OneSnip
 
         public async void AuthMSA(bool zeroUserAction = false)
         {
-
-            string refresh_token = Properties.Settings.Default.refreshToken;
+            //string refresh_token = Properties.Settings.Default.refreshToken;
+            string refresh_token = "";
 
             if (refresh_token != null && refresh_token != "")
             {
                 //attempt to silently sign in
-
-                oneDriveClient = await OneDriveClient.GetSilentlyAuthenticatedMicrosoftAccountClient(
+                try
+                {
+                    oneDriveClient = OneDriveClient.GetSilentlyAuthenticatedMicrosoftAccountClient(
                             config.MicrosoftAccountAppId,
                             returnUrl,
                             config.MicrosoftAccountScopes,
-                            refresh_token);
+                            refresh_token).Result;
 
-                var auth = await oneDriveClient.AuthenticateAsync();
+                    var auth = oneDriveClient.AuthenticateAsync().Result;
 
-                if (oneDriveClient.IsAuthenticated)
-                {
-                    Properties.Settings.Default.refreshToken = auth.RefreshToken;
-                    Properties.Settings.Default.accessToken = auth.AccessToken;
-                    Properties.Settings.Default.tokenType = auth.AccessTokenType;
-                    Properties.Settings.Default.Save();
+                    if (oneDriveClient.IsAuthenticated)
+                    {
+                        Properties.Settings.Default.refreshToken = auth.RefreshToken;
+                        Properties.Settings.Default.accessToken = auth.AccessToken;
+                        Properties.Settings.Default.tokenType = auth.AccessTokenType;
+                        Properties.Settings.Default.Save();
 
-                    return;
+                        return;
+                    }
                 }
-
+                catch (Exception e)
+                {
+                    Properties.Settings.Default.Reset();
+                }
             }
 
             if (zeroUserAction)

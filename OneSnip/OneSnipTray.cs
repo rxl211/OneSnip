@@ -23,6 +23,8 @@ namespace OneSnip
         private static List<Snipper> snippers = new List<Snipper>();
         private static CloudManager cloudManager;
         private static Screen lastScreenUsed;
+        private static bool clickedOnTrayIcon;
+        private static string windowsVersion;
 
         public OneSnipTray()
         {
@@ -34,6 +36,7 @@ namespace OneSnip
             setupTrayIcon();
             cloudManager = new CloudManager();
             setDefaultCopyMode();
+            getWindowsVersion();
 
             cloudManager.AuthMSA(true); //true makes it so that we attempt silent-login only
 
@@ -41,6 +44,14 @@ namespace OneSnip
             {
                 setStartup();
             }
+        }
+
+        private void getWindowsVersion()
+        {
+            RegistryKey rk = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion");
+            windowsVersion = (string)rk.GetValue("ReleaseId");
+
+            return;
         }
 
         private void setupTrayIcon()
@@ -54,9 +65,10 @@ namespace OneSnip
                 Visible = true
             };
             notifyIcon.ContextMenuStrip.Opening += ContextMenuStrip_Opening;
+            notifyIcon.MouseDown += NotifyIcon_MouseDown;
             notifyIcon.MouseUp += notifyIcon_MouseUp;
             notifyIcon.BalloonTipClicked += EditImage;
-        }
+        } 
 
         private void setDefaultCopyMode()
         {
@@ -70,6 +82,11 @@ namespace OneSnip
         public static CloudManager getCloudManager()
         {
             return cloudManager;
+        }
+
+        private void NotifyIcon_MouseDown(object sender, MouseEventArgs e)
+        {
+            clickedOnTrayIcon = true;
         }
 
         private static void notifyIcon_MouseUp(object sender, MouseEventArgs e)
@@ -90,7 +107,7 @@ namespace OneSnip
 
                         foreach (Screen screen in screens)
                         {
-                            Snipper snipperForm = new Snipper(screen, snip);
+                            Snipper snipperForm = new Snipper(screen, snip, windowsVersion);
                             snipperForm.Closed += snipperForm_Closed;
                             snipperForm.Show();
 
@@ -99,6 +116,9 @@ namespace OneSnip
 
                     }
                 }
+
+                clickedOnTrayIcon = false;
+
             }
         }
 
@@ -130,9 +150,12 @@ namespace OneSnip
 
         private static void EditImage(object sender, EventArgs e)
         {
-            editorForm = new Editor(cloudManager.getBuffer(), cloudManager.getFilePath(), lastScreenUsed);
-            editorForm.Closed += editorForm_Closed;
-            editorForm.Show();
+            if (!clickedOnTrayIcon)
+            {
+                editorForm = new Editor(cloudManager.getBuffer(), cloudManager.getFilePath(), lastScreenUsed);
+                editorForm.Closed += editorForm_Closed;
+                editorForm.Show();
+            }            
         }
 
         public static void AddToClipboard(ImageResult result)
