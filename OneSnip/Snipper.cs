@@ -21,6 +21,7 @@ namespace OneSnip
         int selectWidth;
         int selectHeight;
         public Pen selectPen;
+        private bool pressedEsc = false;
 
         private Screen curScreen;
         private Snip snip;
@@ -152,13 +153,16 @@ namespace OneSnip
                     selectY = selectY - Math.Abs(selectHeight);
                     selectHeight = Math.Abs(selectHeight);
                 }
-
-                //pictureBox1.CreateGraphics().DrawRectangle(selectPen, selectX, selectY, selectWidth, selectHeight);
-
             }
 
-            //function save image to clipboard
-            SaveToClipboard();
+            if (!pressedEsc)
+            {
+                SaveToClipboard();
+            } else
+            {
+                pressedEsc = false;
+            }
+                   
             start = false;
         }
 
@@ -226,7 +230,21 @@ namespace OneSnip
         {
             if (e.KeyCode == Keys.Escape)
             {
-                this.Close();
+                if (start)
+                {
+                    start = false;
+                    foreach (Control pb in this.Controls)
+                    {
+                        if (this.Controls.GetChildIndex(pb) == 0)
+                        {
+                            pb.Refresh();
+                            pressedEsc = true;
+                        }
+                    }
+                } else
+                {
+                    this.Close();
+                }
             }
         }
     }
