@@ -75,6 +75,7 @@ namespace OneSnip
             this.TransparencyKey = System.Drawing.Color.HotPink;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Snipper_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Snipper_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.prePrintscreen)).EndInit();
             this.ResumeLayout(false);

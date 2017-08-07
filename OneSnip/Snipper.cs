@@ -221,5 +221,13 @@ namespace OneSnip
             //close overlay
             this.Close();
         }
+
+        private void Snipper_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
+        }
     }
 }
